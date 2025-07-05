@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import br.ifsp.library.dto.MostBorrowedDTO;
+//import br.ifsp.library.dto.MostBorrowedDTO;
 import br.ifsp.library.dto.ReservationResponseDTO;
 import br.ifsp.library.model.*;
 
@@ -27,16 +27,16 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
   Page<Reservation> findByActive(Boolean active, Pageable pageable);
 
-  @Query("SELECT new br.ifsp.library.dto.MostBorrowedDTO(r.book.title, COUNT(r)) " + "FROM Reservation r "
-      + "GROUP BY r.book.title " + "ORDER BY COUNT(r) DESC")
-  List<MostBorrowedDTO> findMostBorrowedBooks();
+ // @Query("SELECT new br.ifsp.library.dto.MostBorrowedDTO(r.book.title, COUNT(r)) " + "FROM Reservation r "
+ //     + "GROUP BY r.book.title " + "ORDER BY COUNT(r) DESC")
+ // List<MostBorrowedDTO> findMostBorrowedBooks();
 
   long countByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
   @Query("SELECT COUNT(DISTINCT r.user.id) FROM Reservation r WHERE r.startDate BETWEEN :start AND :end")
   long countDistinctUsersByStartDateBetween(LocalDate start, LocalDate end);
 
-  @Query("SELECT new br.ifsp.library.dto.MostBorrowedDTO(r.book.title, COUNT(r)) " + "FROM Reservation r "
-      + "WHERE r.startDate BETWEEN :start AND :end " + "GROUP BY r.book.title " + "ORDER BY COUNT(r) DESC")
-  List<MostBorrowedDTO> findMostBorrowedBooksByPeriod(LocalDate start, LocalDate end);
+ // @Query("SELECT new br.ifsp.library.dto.MostBorrowedDTO(r.book.title, COUNT(r)) " + "FROM Reservation r "
+ //     + "WHERE r.startDate BETWEEN :start AND :end " + "GROUP BY r.book.title " + "ORDER BY COUNT(r) DESC")
+ // List<MostBorrowedDTO> findMostBorrowedBooksByPeriod(LocalDate start, LocalDate end);
 }

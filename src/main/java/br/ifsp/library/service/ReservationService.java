@@ -1,9 +1,11 @@
 package br.ifsp.library.service;
 
+import br.ifsp.library.dto.ReservationEventDTO;
 import br.ifsp.library.dto.ReservationResponseDTO;
 import br.ifsp.library.exception.BadRequestException;
 import br.ifsp.library.exception.ResourceNotFoundException;
 import br.ifsp.library.model.User;
+import br.ifsp.library.producer.RabbitMQProducer;
 import br.ifsp.library.repository.BookRepository;
 import br.ifsp.library.repository.ReservationRepository;
 import br.ifsp.library.repository.UserRepository;
@@ -37,7 +39,9 @@ public class ReservationService {
   @Autowired
   private ModelMapper model;
 
-
+  @Autowired
+  private RabbitMQProducer rabbitMQProducer;
+  
   public Page<ReservationResponseDTO> getAllReservation(int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
     Page<Reservation> reservation = reservationRepository.findAll(pageable);
@@ -95,6 +99,12 @@ public class ReservationService {
     reservation.setActive(true);
     reservation.transformResponseDTO();
     reservationRepository.save(reservation);
+    ReservationEventDTO reserveEvent = new ReservationEventDTO(
+    		reservation.getId(), reservation.getBook().getId(), reservation.getUser().getId(), 
+    		reservation.getStartDate(), reservation.getEndDate());
+    
+    rabbitMQProducer.produceReservationEvent(reserveEvent);
+    
     return reservation.transformResponseDTO();
   }
 

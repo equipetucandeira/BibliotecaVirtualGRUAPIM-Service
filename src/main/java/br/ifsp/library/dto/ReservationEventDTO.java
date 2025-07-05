@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationEventDTO implements Serializable {
+public class ReservationEventDTO {
 	private Long reservationId;
     private Long bookId;
     private Long userId;

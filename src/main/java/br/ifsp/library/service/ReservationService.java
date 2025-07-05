@@ -101,7 +101,7 @@ public class ReservationService {
     reservationRepository.save(reservation);
     ReservationEventDTO reserveEvent = new ReservationEventDTO(
     		reservation.getId(), reservation.getBook().getId(), reservation.getUser().getId(), 
-    		reservation.getStartDate(), reservation.getEndDate());
+    		reservation.getStartDate(), reservation.getEndDate(), reservation.getBook().getTitle());
     
     rabbitMQProducer.produceReservationEvent(reserveEvent);
     

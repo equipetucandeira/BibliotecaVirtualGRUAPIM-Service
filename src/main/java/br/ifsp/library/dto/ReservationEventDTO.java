@@ -1,6 +1,5 @@
 package br.ifsp.library.dto;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -16,4 +15,5 @@ public class ReservationEventDTO {
     private Long userId;
     private LocalDate reservationDateBegin;
     private LocalDate reservationDateEnd;
+    private String bookTitle;
 }

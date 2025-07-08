@@ -13,7 +13,7 @@ public class ReservationEventDTO {
 	private Long reservationId;
     private Long bookId;
     private Long userId;
-    private LocalDate reservationDateBegin;
-    private LocalDate reservationDateEnd;
+    private LocalDate reservationStartDate;
+    private LocalDate reservationEndDate;
     private String bookTitle;
 }

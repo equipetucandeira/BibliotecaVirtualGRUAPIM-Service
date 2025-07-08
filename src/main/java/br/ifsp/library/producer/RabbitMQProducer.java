@@ -20,8 +20,8 @@ public class RabbitMQProducer {
 	
 	public void produceReservationEvent(ReservationEventDTO event) {
 		try {
-			String json = objectMapper.writeValueAsString(event);
-			rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, json);
+			//String json = objectMapper.writeValueAsString(event);
+			rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, event);
 			System.out.println("Event delivered to RabbitMQ: " + event);
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao serializar o evento", e);
